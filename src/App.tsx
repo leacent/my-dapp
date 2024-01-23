@@ -18,7 +18,7 @@ function App() {
   const [myTokenBalalnce, setMyTokenBalance] = useState<string>("");
   const [myToken, setMyToken] = useState<string>("");
   const [logsArr, setLogsArr] = useState<Array<{hash: string, receipt: string}>>([]);
-  const [loading, setLoading] = useState<true>(false)
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     const initProvider = async () => {
