@@ -87,10 +87,25 @@ function App() {
   }, [getBankInfo])
   
   const handleDeposit = async () => {
-    setLoading(true)
-    const bankContract = getBankContract()
-    const result = await bankContract.deposit(depositValue)
-    printTx(result)
+    try {
+      setLoading(true)
+      const bankContract = getBankContract()
+      const result = await bankContract.deposit(depositValue)
+      printTx(result)
+    } catch (error) {
+      setLoading(false)
+    }
+  }
+
+  const handleWithdraw = async () => {
+    try {
+      setLoading(true)
+      const bankContract = getBankContract()
+      const result = await bankContract.withdraw()
+      printTx(result)
+    } catch (error) {
+      setLoading(false)
+    }
   }
 
   const printTx = async(result) => {
@@ -109,21 +124,6 @@ function App() {
       <Button type="primary" onClick={handleConnect}>Connect Wallet</Button>
     </div>
   }
-
-  const data = [
-    {
-      title: 'Ant Design Title 1',
-    },
-    {
-      title: 'Ant Design Title 2',
-    },
-    {
-      title: 'Ant Design Title 3',
-    },
-    {
-      title: 'Ant Design Title 4',
-    },
-  ];
 
   return (
     <Spin spinning={loading}>
@@ -159,7 +159,8 @@ function App() {
                 }}
                 style={{width: '240px', marginRight: "12px"}} 
                 placeholder="Please Input Amount!" />
-              <Button onClick={handleDeposit} type="primary">Deposit</Button>
+              <Button onClick={handleDeposit} type="primary" style={{marginRight: '24px'}}>Deposit</Button>
+              <Button onClick={handleWithdraw} type="primary">Withdraw</Button>
             </div>
 
           </Card>
@@ -173,7 +174,7 @@ function App() {
               <List.Item>
                 <List.Item.Meta
                   avatar={<Avatar src={`https://api.dicebear.com/7.x/miniavs/svg?seed=${index}`} />}
-                  title={<h5>{item.hash}</h5>}
+                  title={<span style={{'color': 'red'}}>{item.hash}</span>}
                   description={item.receipt}
                 />
               </List.Item>
